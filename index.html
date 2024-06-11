@@ -58,6 +58,18 @@
             <label for="plan-id">Plan ID:</label>
             <input type="text" id="plan-id" required>
         </div>
+        <div class="form-group">
+            <label for="user-id">User ID:</label>
+            <input type="text" id="user-id" required>
+        </div>
+        <div class="form-group">
+            <label for="resource-id">Resource ID:</label>
+            <input type="text" id="resource-id" required>
+        </div>
+        <div class="form-group">
+            <label for="user-type">User Type:</label>
+            <input type="text" id="user-type" required>
+        </div>
         <button type="submit">Subscribe</button>
     </form>
 
@@ -104,6 +116,9 @@
 
             const email = document.getElementById('email').value;
             const planId = document.getElementById('plan-id').value;
+            const userId = document.getElementById('user-id').value;
+            const resourceId = document.getElementById('resource-id').value;
+            const userType = document.getElementById('user-type').value;
 
             try {
                 const response = await fetch('http://localhost:3000/create-checkout-session', {
@@ -111,7 +126,7 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ email, planId }),
+                    body: JSON.stringify({ email, planId, userId, resourceId, userType }),
                 });
 
                 if (!response.ok) {
