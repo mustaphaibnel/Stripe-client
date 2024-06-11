@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stripe One-Time Payment</title>
+    <title>Stripe Subscription</title>
     <script src="https://js.stripe.com/v3/"></script>
     <style>
         .form-group {
@@ -13,25 +13,97 @@
             display: block;
             margin-bottom: 0.5em;
         }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
-    <h1>One-Time Payment</h1>
-    <form id="payment-form">
+    <h1>Create Subscription Plan</h1>
+    <form id="create-plan-form">
         <div class="form-group">
-            <label for="amount">Amount (in USD):</label>
-            <input type="number" id="amount" required>
+            <label for="product-name">Product Name:</label>
+            <input type="text" id="product-name" required>
         </div>
-        <button type="submit">Pay</button>
+        <div class="form-group">
+            <label for="price">Price (in cents):</label>
+            <input type="number" id="price" required>
+        </div>
+        <div class="form-group">
+            <label for="interval">Interval (e.g., month):</label>
+            <input type="text" id="interval" required>
+        </div>
+        <div class="form-group">
+            <label for="creator-id">Creator ID:</label>
+            <input type="text" id="creator-id" required>
+        </div>
+        <button type="submit">Create Plan</button>
     </form>
+
+    <h1>Available Plans</h1>
+    <pre id="plans-list"></pre>
+
+    <h1>Available Customers</h1>
+    <pre id="customers-list"></pre>
+
+    <h1>Subscribe to a Plan</h1>
+    <form id="subscribe-form">
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+        </div>
+        <div class="form-group">
+            <label for="plan-id">Plan ID:</label>
+            <input type="text" id="plan-id" required>
+        </div>
+        <button type="submit">Subscribe</button>
+    </form>
+
     <script>
         const stripe = Stripe('pk_test_51PQDAFRv7G5ppYXUx4IQ2zbbFXCMujC0n3YzU7Kn4OrpxbKdXlLnVNm5ISjpRxefdef7h3RXM5kEk48LCVVuwJCF00n1LBnaEN'); // Replace with your Stripe public key
 
-        const form = document.getElementById('payment-form');
-        form.addEventListener('submit', async (event) => {
+        const createPlanForm = document.getElementById('create-plan-form');
+        const plansList = document.getElementById('plans-list');
+        const customersList = document.getElementById('customers-list');
+
+        createPlanForm.addEventListener('submit', async (event) => {
             event.preventDefault();
 
-            const amount = document.getElementById('amount').value * 100; // Convert to cents
+            const productName = document.getElementById('product-name').value;
+            const price = document.getElementById('price').value;
+            const interval = document.getElementById('interval').value;
+            const creatorId = document.getElementById('creator-id').value;
+
+            try {
+                const response = await fetch('http://localhost:3000/create-plan', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ productName, price, interval, creatorId }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+
+                const data = await response.json();
+                console.log('Plan created:', data.planId);
+                await fetchPlans();
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
+        const subscribeForm = document.getElementById('subscribe-form');
+
+        subscribeForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const planId = document.getElementById('plan-id').value;
 
             try {
                 const response = await fetch('http://localhost:3000/create-checkout-session', {
@@ -39,7 +111,7 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ amount }),
+                    body: JSON.stringify({ email, planId }),
                 });
 
                 if (!response.ok) {
@@ -60,6 +132,25 @@
                 console.error('Error:', error);
             }
         });
+
+        async function fetchPlans() {
+            const response = await fetch('http://localhost:3000/plans');
+            const data = await response.json();
+            plansList.textContent = JSON.stringify(data.plans, null, 2);
+        }
+
+        async function fetchCustomers() {
+            const response = await fetch('http://localhost:3000/customers');
+            const data = await response.json();
+            customersList.textContent = JSON.stringify(data.customers, null, 2);
+        }
+
+        async function initialize() {
+            await fetchPlans();
+            await fetchCustomers();
+        }
+
+        initialize();
     </script>
 </body>
 </html>
