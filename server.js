@@ -191,6 +191,15 @@ app.post('/webhook', express.raw({ type: 'application/json' }), (request, respon
             const resourceId = session.metadata.resourceId;
             const userType = session.metadata.userType;
 
+            // Log necessary details
+            console.log(`Subscription ID: ${session.subscription}`);
+            console.log(`Plan ID: ${planId}`);
+            console.log(`User Email: ${email}`);
+            console.log(`Amount Total: ${session.amount_total}`);
+            console.log(`User ID: ${userId}`);
+            console.log(`Resource ID: ${resourceId}`);
+            console.log(`User Type: ${userType}`);
+
             // Process the metadata as needed
             console.log(`Metadata - Email: ${email}, Plan ID: ${planId}, User ID: ${userId}, Resource ID: ${resourceId}, User Type: ${userType}`);
 
@@ -198,6 +207,22 @@ app.post('/webhook', express.raw({ type: 'application/json' }), (request, respon
         case 'payment_intent.succeeded':
             const paymentIntent = event.data.object;
             console.log('PaymentIntent was successful!');
+            console.log(`PaymentIntent ID: ${paymentIntent.id}`);
+            console.log(`Amount Received: ${paymentIntent.amount_received}`);
+            break;
+        case 'invoice.payment_succeeded':
+            const invoice = event.data.object;
+            console.log('Invoice payment succeeded:', invoice);
+            console.log(`Invoice ID: ${invoice.id}`);
+            console.log(`Subscription ID: ${invoice.subscription}`);
+            console.log(`Amount Paid: ${invoice.amount_paid}`);
+            break;
+        case 'invoice.payment_failed':
+            const failedInvoice = event.data.object;
+            console.log('Invoice payment failed:', failedInvoice);
+            console.log(`Invoice ID: ${failedInvoice.id}`);
+            console.log(`Subscription ID: ${failedInvoice.subscription}`);
+            console.log(`Attempt Count: ${failedInvoice.attempt_count}`);
             break;
         // ... handle other event types
         default:
