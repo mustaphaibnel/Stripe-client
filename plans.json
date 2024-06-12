@@ -1,11 +1,20 @@
 {
-  "ea81b389-88fe-46f7-bf8a-e61a254f0e95": {
-    "planId": "ea81b389-88fe-46f7-bf8a-e61a254f0e95",
+  "af95defc-8d65-478b-a7f3-e45ba6e53aa4": {
+    "planId": "af95defc-8d65-478b-a7f3-e45ba6e53aa4",
     "creatorId": "creator-01",
-    "productId": "prod_QH9DcJ2KcsUar3",
-    "priceId": "price_1PQavNRv7G5ppYXU6sPtCHzF",
+    "productId": "prod_QHOttR4604bAES",
+    "priceId": "price_1PQq5GRv7G5ppYXULOvUhONK",
     "productName": "creator-01-basic",
-    "price": "50",
+    "price": "2000",
+    "interval": "month"
+  },
+  "bff48702-1d16-4a8e-85c7-ace8538a470f": {
+    "planId": "bff48702-1d16-4a8e-85c7-ace8538a470f",
+    "creatorId": "creator-02",
+    "productId": "prod_QHP1Z67gkEfkr8",
+    "priceId": "price_1PQqDjRv7G5ppYXUXe7CBcqv",
+    "productName": "creator-02-basic",
+    "price": "1900",
     "interval": "month"
   }
 }

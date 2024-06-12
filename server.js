@@ -182,7 +182,7 @@ app.post('/webhook', express.raw({ type: 'application/json' }), (request, respon
     switch (event.type) {
         case 'checkout.session.completed':
             const session = event.data.object;
-            console.log('Checkout session completed:', session);
+            //console.log('Checkout session completed:', session);
 
             // Access metadata
             const email = session.metadata.email;
