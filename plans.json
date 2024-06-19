@@ -16,5 +16,32 @@
     "productName": "creator-02-basic",
     "price": "1900",
     "interval": "month"
+  },
+  "0b683d23-2e09-489c-9b87-96a32dc99515": {
+    "planId": "0b683d23-2e09-489c-9b87-96a32dc99515",
+    "creatorId": "creator-03",
+    "productId": "prod_QHPWqPpiZ2OhV4",
+    "priceId": "price_1PQqhpRv7G5ppYXUUaT6ZV85",
+    "productName": "creator-03-basic",
+    "price": "1000",
+    "interval": "month"
+  },
+  "a6a81e6e-b508-44ce-8e59-c0159083c577": {
+    "planId": "a6a81e6e-b508-44ce-8e59-c0159083c577",
+    "creatorId": "creator-003",
+    "productId": "prod_QHPufwpoEvfR2T",
+    "priceId": "price_1PQr4uRv7G5ppYXUtmPzzqer",
+    "productName": "creator-03-basic",
+    "price": "1900",
+    "interval": "month"
+  },
+  "f923415c-9e9c-467f-a50d-7e294ad98f41": {
+    "planId": "f923415c-9e9c-467f-a50d-7e294ad98f41",
+    "creatorId": "creator-03",
+    "productId": "prod_QHQaz65zKwn00Y",
+    "priceId": "price_1PQrjjRv7G5ppYXUOg7UD3Ou",
+    "productName": "creator-03-basic-plan",
+    "price": "1900",
+    "interval": "month"
   }
 }
